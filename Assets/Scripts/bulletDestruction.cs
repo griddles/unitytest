@@ -3,6 +3,7 @@ using UnityEngine;
 public class bulletDestruction : MonoBehaviour
 {
     public int trailLength;
+    public LayerMask layer;
 
     private LineRenderer trail;
     private Vector3 lastFrame;
@@ -39,11 +40,11 @@ public class bulletDestruction : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        // check if the collision is layer 0
-        if (collision.gameObject.layer == 0)
+        // check if the collision is in the layermask
+        if (layer == (layer | (1 << collision.gameObject.layer)))
         {
-            GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-            Destroy(gameObject, 0.03f);
+            GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll; 
+            Destroy(gameObject, 0.03f); // allows the trail to fade out a little
         }
     }
 }

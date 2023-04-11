@@ -43,7 +43,7 @@ public class enemy : MonoBehaviour
             currentMovement = Tick();
         }
 
-        rigidbody.velocity = currentMovement;
+        rigidbody.velocity = currentMovement; 
 
         time += 1;
     }
@@ -58,12 +58,10 @@ public class enemy : MonoBehaviour
         // check to see if the raycast actually hit
         if (hit.collider != null)
         {
-            Debug.Log(hit.collider.tag);
             if (hit.collider.tag == "Player")
             {
                 playerPos = hit.transform.position;
                 playerSeen = true;
-                Debug.Log("player seen");
             }
         }
 
@@ -82,7 +80,7 @@ public class enemy : MonoBehaviour
             }
         }
 
-        Vector3 movement = Vector3.zero;
+        Vector3 movement;
 
         // if the player hasnt been seen, only have a 25% chance of moving
         
