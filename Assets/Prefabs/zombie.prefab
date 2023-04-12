@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3467540496812411361}
   - component: {fileID: 4259101956554528427}
   - component: {fileID: 283815816544671365}
-  - component: {fileID: 4360231099768499329}
+  - component: {fileID: 2959582965360073604}
   - component: {fileID: 2945075730399873585}
   - component: {fileID: 2401214513012499868}
   m_Layer: 7
@@ -130,8 +130,8 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 9
---- !u!61 &4360231099768499329
-BoxCollider2D:
+--- !u!68 &2959582965360073604
+EdgeCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -165,17 +165,31 @@ BoxCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.16, y: 0.2}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 0.16, y: 0.2}
   m_EdgeRadius: 0
+  m_Points:
+  - {x: -0.050890736, y: -0.00674998}
+  - {x: -0.063629515, y: 0.020681474}
+  - {x: -0.060016684, y: 0.03768971}
+  - {x: -0.032036513, y: 0.041079357}
+  - {x: -0.029578688, y: 0.069855966}
+  - {x: -0.022461496, y: 0.08901532}
+  - {x: 0.020451397, y: 0.09071284}
+  - {x: 0.040107448, y: 0.06934944}
+  - {x: 0.02776144, y: 0.052870385}
+  - {x: 0.056171495, y: 0.038573805}
+  - {x: 0.060243435, y: 0.009182157}
+  - {x: 0.05056937, y: -0.03784334}
+  - {x: 0.07139988, y: -0.06897731}
+  - {x: 0.03373266, y: -0.07454093}
+  - {x: 0.03985764, y: -0.10004021}
+  - {x: -0.009974675, y: -0.09983191}
+  - {x: -0.073000126, y: -0.07719549}
+  - {x: -0.07919909, y: -0.050253123}
+  - {x: -0.05035892, y: -0.006328091}
+  m_AdjacentStartPoint: {x: 0, y: 0}
+  m_AdjacentEndPoint: {x: 0, y: 0}
+  m_UseAdjacentStartPoint: 0
+  m_UseAdjacentEndPoint: 0
 --- !u!50 &2945075730399873585
 Rigidbody2D:
   serializedVersion: 4
@@ -258,7 +272,7 @@ MonoBehaviour:
     m_TrimEdge: 0.06
     m_FlipX: 0
     m_FlipY: 0
-    m_InitialTrim: 0.06
+    m_InitialTrim: 0
   m_CastingOption: 1
   references:
     version: 2

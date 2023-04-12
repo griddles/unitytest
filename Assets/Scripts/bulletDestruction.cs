@@ -38,12 +38,22 @@ public class bulletDestruction : MonoBehaviour
     }
 
 
-    void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
+        // check if the object has an enemy script on it
+        if (collision.gameObject.GetComponent<enemy>() != null)
+        {
+            // get the current magnitude and direction of the bullet's velocity
+            float magnitude = GetComponent<Rigidbody2D>().velocity.magnitude;
+            Vector2 direction = -GetComponent<Rigidbody2D>().velocity.normalized;
+            // apply knockback to the enemy
+            collision.gameObject.GetComponent<enemy>().Knockback(direction, magnitude / 5);
+        }
+
         // check if the collision is in the layermask
         if (layer == (layer | (1 << collision.gameObject.layer)))
         {
-            GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll; 
+            GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
             Destroy(gameObject, 0.03f); // allows the trail to fade out a little
         }
     }

@@ -21,6 +21,7 @@ public class enemy : MonoBehaviour
     private playerMovement player;
     private Vector3 playerPos;
     private Vector3 currentMovement;
+    private Vector3 knockback;
 
     private Rigidbody2D rigidbody;
 
@@ -43,12 +44,13 @@ public class enemy : MonoBehaviour
             currentMovement = Tick();
         }
 
-        rigidbody.velocity = currentMovement; 
+        rigidbody.velocity = currentMovement + knockback;
+        Vector3.Lerp(knockback, Vector3.zero, 0.1f);
 
         time += 1;
     }
 
-    private Vector3 Tick()
+    private Vector3 Tick() // enemy update script
     {
         bool playerSeen = false;
 
@@ -145,5 +147,10 @@ public class enemy : MonoBehaviour
         }
 
         return movement;
+    }
+
+    public void Knockback(Vector3 direction, float force)
+    {
+        knockback = direction * force;
     }
 }
