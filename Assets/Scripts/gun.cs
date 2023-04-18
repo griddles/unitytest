@@ -14,6 +14,7 @@ public class gun : MonoBehaviour
     public float spread;
     public float recoil;
     public LayerMask wallLayer;
+    public ParticleSystem muzzleSmoke;
 
     private GameObject bullet;
     private LineRenderer trail;
@@ -44,6 +45,7 @@ public class gun : MonoBehaviour
     {
         if (shootInput && cooldown <= 0)
         {
+            muzzleSmoke.Play();
             Shoot();
             cooldown = rateOfFire;
             shootInput = false;
@@ -56,13 +58,16 @@ public class gun : MonoBehaviour
     {
         Vector2 direction = new Vector2(transform.up.x, transform.up.y);
 
+        // get a position behind the muzzlepoint
+        Vector3 behind = muzzlePoint.position - 0.5f * transform.up;
+
         if (!hitscan)
         {
             for (int i = 0; i < bullets; i++)
             {
                 float angle = Random.Range(-spread, spread);
                 direction = Quaternion.Euler(0, 0, angle) * direction;
-                GameObject newBullet = Instantiate(bullet, muzzlePoint.position, Quaternion.identity);
+                GameObject newBullet = Instantiate(bullet, behind, Quaternion.identity);
                 newBullet.GetComponent<Rigidbody2D>().velocity = direction * muzzleVelocity;
 
                 Destroy(newBullet, 2f);

@@ -69,7 +69,6 @@ public class playerMovement : MonoBehaviour
         // find object with tag CameraController
         Cinemachine.CinemachineVirtualCamera cameraController = GameObject.FindGameObjectWithTag("CameraController").GetComponent<Cinemachine.CinemachineVirtualCamera>();
         cameraController.Follow = transform;
-
     }
 
     void Update() // get all input (this runs every frame so it'll always detect input)
@@ -112,7 +111,18 @@ public class playerMovement : MonoBehaviour
         // handles dashing
         if (dashDelay == 0 && currentDashMeter > dashCost && dashInput)
         {
-            dash = new Vector2(xInput * speed * 2, yInput * speed * 2);
+            Vector2 dashDir;
+            // get the current direction of movement if the magnitude is greater than movementSnapping
+            if (rigidbody.velocity.magnitude > movementSnapping)
+            {
+                dashDir = rigidbody.velocity.normalized * dashPower;
+            }
+            else
+            {
+                dashDir = camera.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+            }
+            dashDir.Normalize();
+            dash = dashDir * dashPower;
             dashDelay = dashCooldown;
             currentDashMeter -= dashCost;
         }
@@ -219,7 +229,7 @@ public class playerMovement : MonoBehaviour
         camera.orthographicSize = Mathf.Lerp(camera.orthographicSize, Math.Clamp(minCamSize * 0.9f + rigidbody.velocity.magnitude / 10, minCamSize, maxCamSize), 0.1f);
 
         // lerps velocities back to 0 (simulates friction and drag)
-        dash = Vector2.Lerp(dash, Vector2.zero, dashPower);
+        dash = Vector2.Lerp(dash, Vector2.zero, 0.1f);
         velocity = Vector2.Lerp(velocity, Vector2.zero, 0.3f);
 
         // handles dash meter sprite

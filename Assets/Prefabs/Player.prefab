@@ -746,7 +746,7 @@ Transform:
   - {fileID: 1438923229695381697}
   - {fileID: 3968760623767676018}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &5679211256252498400
 BoxCollider2D:
@@ -845,7 +845,7 @@ MonoBehaviour:
   dashChargeSpeed: 0.6
   dashCost: 33
   dashMeter: 99
-  dashPower: 0.06
+  dashPower: 30
   grappleRange: 15
   grappleForce: 1
   grappleDecay: 0.05
@@ -968,7 +968,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9032362314385008976}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
@@ -984,7 +984,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9032362314385008976}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c377620fb665a4547b0ffe28a2859522, type: 3}
   m_Name: 

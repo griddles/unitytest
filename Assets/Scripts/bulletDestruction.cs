@@ -53,7 +53,6 @@ public class bulletDestruction : MonoBehaviour
         // check if the collision is in the layermask
         if (layer == (layer | (1 << collision.gameObject.layer)))
         {
-            GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
             Destroy(gameObject, 0.03f); // allows the trail to fade out a little
         }
     }
