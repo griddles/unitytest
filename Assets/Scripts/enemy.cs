@@ -45,7 +45,7 @@ public class enemy : MonoBehaviour
         }
 
         rigidbody.velocity = currentMovement + knockback;
-        Vector3.Lerp(knockback, Vector3.zero, 0.1f);
+        knockback = Vector3.Lerp(knockback, Vector3.zero, 0.1f);
 
         time += 1;
     }

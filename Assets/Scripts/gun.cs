@@ -13,7 +13,8 @@ public class gun : MonoBehaviour
     public float bullets;
     public float spread;
     public float recoil;
-    public LayerMask wallLayer;
+    public LayerMask hitLayer;
+    
     public ParticleSystem muzzleSmoke;
 
     private GameObject bullet;
@@ -56,7 +57,7 @@ public class gun : MonoBehaviour
 
     private void Shoot()
     {
-        Vector2 direction = new Vector2(transform.up.x, transform.up.y);
+        Vector2 spread = new Vector2(transform.up.x, transform.up.y);
 
         // get a position behind the muzzlepoint
         Vector3 behind = muzzlePoint.position - 0.5f * transform.up;
@@ -65,26 +66,33 @@ public class gun : MonoBehaviour
         {
             for (int i = 0; i < bullets; i++)
             {
-                float angle = Random.Range(-spread, spread);
-                direction = Quaternion.Euler(0, 0, angle) * direction;
+                float angle = Random.Range(-this.spread, this.spread);
+                spread = Quaternion.Euler(0, 0, angle) * spread;
                 GameObject newBullet = Instantiate(bullet, behind, Quaternion.identity);
-                newBullet.GetComponent<Rigidbody2D>().velocity = direction * muzzleVelocity;
+                newBullet.GetComponent<Rigidbody2D>().velocity = spread * muzzleVelocity;
 
                 Destroy(newBullet, 2f);
             }
         }
         else
         {
-            // fire a raycast out of the muzzlepoint that hits everything
-            RaycastHit2D hit = Physics2D.Raycast(muzzlePoint.position, transform.up, Mathf.Infinity, wallLayer);
+            // fire a raycast out of the muzzlepoint
+            RaycastHit2D hit = Physics2D.Raycast(muzzlePoint.position, transform.up, Mathf.Infinity, hitLayer);
             if (hit.collider != null)
             {
                 trail.SetPosition(0, muzzlePoint.position);
                 trail.SetPosition(1, hit.point);
+
+                if (hit.collider.gameObject.GetComponentInParent<enemy>() != null)
+                {
+                    Vector2 direction = hit.normal;
+                    // apply knockback to the enemy
+                    hit.collider.gameObject.GetComponent<enemy>().Knockback(direction, muzzleVelocity / 8);
+                }
             }
             else
             {
-                // get a point 50 units in the pointing direction and enable the trail, then set the two trail points accordingly
+                // if it doesn't hit anything, just draw a 50 unit line so it still looks good
                 Vector3 point = muzzlePoint.position + 50 * transform.up;
                 trail.SetPosition(0, muzzlePoint.position);
                 trail.SetPosition(1, point);
@@ -92,6 +100,6 @@ public class gun : MonoBehaviour
         }
 
         // set the velocity value in the parent of the parent to the opposite of the bullet's velocity to simulate recoil
-        transform.parent.parent.GetComponent<playerMovement>().velocity = -direction * muzzleVelocity * recoil;
+        transform.parent.parent.GetComponent<playerMovement>().velocity = -spread * muzzleVelocity * recoil;
     }
 }

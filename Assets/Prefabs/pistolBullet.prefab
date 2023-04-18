@@ -276,6 +276,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trailLength: 12
-  layer:
+  hitLayer:
     serializedVersion: 2
-    m_Bits: 151
+    m_Bits: 512

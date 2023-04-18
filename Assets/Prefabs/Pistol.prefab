@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 855059168719364480}
   - component: {fileID: 131810967040304484}
   - component: {fileID: 865038465594008365}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: muzzlePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4897,7 +4897,7 @@ GameObject:
   - component: {fileID: 1612217860123817394}
   - component: {fileID: 5422108751945954404}
   - component: {fileID: 588293765613885173}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4994,7 +4994,7 @@ MonoBehaviour:
   bullets: 1
   spread: 1
   recoil: 0.05
-  wallLayer:
+  hitLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   muzzleSmoke: {fileID: 131810967040304484}

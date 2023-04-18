@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5054229045889256465}
   - component: {fileID: 3816309272811359988}
   - component: {fileID: 3670096874704174511}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: Shotgun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,9 +108,9 @@ MonoBehaviour:
   bullets: 6
   spread: 4
   recoil: 0.2
-  wallLayer:
+  hitLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   muzzleSmoke: {fileID: 6809098878141823715}
 --- !u!1 &7138584569783367381
 GameObject:
@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 9017248546736966777}
   - component: {fileID: 8883202343323460866}
   - component: {fileID: 6809098878141823715}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: muzzlePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

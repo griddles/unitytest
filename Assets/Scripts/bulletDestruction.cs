@@ -3,7 +3,7 @@ using UnityEngine;
 public class bulletDestruction : MonoBehaviour
 {
     public int trailLength;
-    public LayerMask layer;
+    public LayerMask hitLayer;
 
     private LineRenderer trail;
     private Vector3 lastFrame;
@@ -34,26 +34,28 @@ public class bulletDestruction : MonoBehaviour
             trail.SetPosition(trailLength - 1, lastFrame);
         }
 
+        // check if there's an object in the way of the bullet (collision detection at home)
+        RaycastHit2D hit = Physics2D.Linecast(lastFrame, transform.position, hitLayer);
+        if (hit.collider != null)
+        {
+            Collision(hit.collider);
+        }
+
         lastFrame = transform.position;
     }
 
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void Collision(Collider2D collision)
     {
-        // check if the object has an enemy script on it
-        if (collision.gameObject.GetComponent<enemy>() != null)
+        // check if the object's parent has an enemy script on it
+        if (collision.gameObject.GetComponentInParent<enemy>() != null)
         {
             // get the current magnitude and direction of the bullet's velocity
             float magnitude = GetComponent<Rigidbody2D>().velocity.magnitude;
-            Vector2 direction = -GetComponent<Rigidbody2D>().velocity.normalized;
+            Vector2 direction = GetComponent<Rigidbody2D>().velocity.normalized;
             // apply knockback to the enemy
-            collision.gameObject.GetComponent<enemy>().Knockback(direction, magnitude / 5);
+            collision.gameObject.GetComponent<enemy>().Knockback(direction, magnitude / 8);
         }
 
-        // check if the collision is in the layermask
-        if (layer == (layer | (1 << collision.gameObject.layer)))
-        {
-            Destroy(gameObject, 0.03f); // allows the trail to fade out a little
-        }
+        Destroy(gameObject);
     }
 }
