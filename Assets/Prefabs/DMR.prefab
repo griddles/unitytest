@@ -5101,5 +5101,7 @@ MonoBehaviour:
   recoil: 0.2
   hitLayer:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 1536
   muzzleSmoke: {fileID: 8009834242357739248}
+  coin: {fileID: 2939538762924637808, guid: 9f38627226dabd6459bae9c0137ca1f4, type: 3}
+  coinForce: 5

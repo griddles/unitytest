@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
@@ -14,8 +15,9 @@ public class gun : MonoBehaviour
     public float spread;
     public float recoil;
     public LayerMask hitLayer;
-    
     public ParticleSystem muzzleSmoke;
+    public GameObject coin;
+    public float coinForce;
 
     private GameObject bullet;
     private LineRenderer trail;
@@ -39,6 +41,16 @@ public class gun : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && cooldown <= 0)
         {
             shootInput = true;
+        }
+
+        // if the player right clicks, spawn a coin at the player and give it coinForce towards the mouse
+        if (Input.GetMouseButtonDown(1))
+        {
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 direction = mousePos - transform.position;
+            direction.Normalize();
+            GameObject newCoin = Instantiate(coin, transform.position, Quaternion.identity);
+            newCoin.GetComponent<Rigidbody2D>().velocity = coinForce * direction;
         }
     }
 
@@ -89,6 +101,11 @@ public class gun : MonoBehaviour
                     // apply knockback to the enemy
                     hit.collider.gameObject.GetComponent<enemy>().Knockback(direction, muzzleVelocity / 8);
                 }
+                // otherwise, if the raycast hits a coin :) layer, call Ricochet() on the coin
+                else if (hit.collider.gameObject.layer == LayerMask.GetMask("coin :)"))
+                {
+                    hit.collider.gameObject.GetComponent<coin>().Ricochet();
+                }
             }
             else
             {
@@ -101,5 +118,13 @@ public class gun : MonoBehaviour
 
         // set the velocity value in the parent of the parent to the opposite of the bullet's velocity to simulate recoil
         transform.parent.parent.GetComponent<playerMovement>().velocity = -spread * muzzleVelocity * recoil;
+    }
+
+    // coroutine that sets timescale to 0 for 3 frames
+    private IEnumerator ShootStop(float time)
+    {
+        Time.timeScale = 0;
+        yield return new WaitForSecondsRealtime(time);
+        Time.timeScale = 1;
     }
 }

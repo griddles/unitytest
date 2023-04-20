@@ -112,6 +112,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   muzzleSmoke: {fileID: 6809098878141823715}
+  coin: {fileID: 2939538762924637808, guid: 9f38627226dabd6459bae9c0137ca1f4, type: 3}
+  coinForce: 5
 --- !u!1 &7138584569783367381
 GameObject:
   m_ObjectHideFlags: 0

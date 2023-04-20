@@ -55,7 +55,6 @@ public class bulletDestruction : MonoBehaviour
             // apply knockback to the enemy
             collision.gameObject.GetComponent<enemy>().Knockback(direction, magnitude / 8);
         }
-
-        Destroy(gameObject);
+        Destroy(gameObject, 0.02f);
     }
 }
