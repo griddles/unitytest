@@ -100,6 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitscan: 0
   bullet: {fileID: 426756300801677918, guid: 2eb98e53eead1a941abd645102d7533b, type: 3}
+  trail: {fileID: 3614912160873759746, guid: cbede616c3a2d324a8b3069666e30101, type: 3}
   muzzlePoint: {fileID: 9017248546736966777}
   normalSprite: {fileID: 21300000, guid: 4292aa08d7f157344b0bb4ed76ec23fc, type: 3}
   sideSprite: {fileID: 21300000, guid: 1a2c6032851f2cf489b47bfc9c315f41, type: 3}

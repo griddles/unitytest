@@ -108,7 +108,7 @@ MonoBehaviour:
   enemyLOSCheck:
     serializedVersion: 2
     m_Bits: 640
-  bullet: {fileID: 3614912160873759746, guid: cbede616c3a2d324a8b3069666e30101, type: 3}
+  bullet: {fileID: 560152722981042148, guid: cbede616c3a2d324a8b3069666e30101, type: 3}
   dead: 0
 --- !u!58 &196053635745157712
 CircleCollider2D:

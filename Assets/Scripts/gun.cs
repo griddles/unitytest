@@ -1,3 +1,4 @@
+using NUnit.Framework;
 using System;
 using System.Collections;
 using System.Runtime.CompilerServices;
@@ -8,7 +9,6 @@ public class gun : MonoBehaviour
 {
     public bool hitscan;
     public GameObject bullet;
-    public trail trail;
     public Transform muzzlePoint;
     public Sprite normalSprite;
     public Sprite sideSprite;
@@ -50,7 +50,6 @@ public class gun : MonoBehaviour
 
     void FixedUpdate()
     {
-        Debug.Log(shootInput + " | " + cooldown);
         if (shootInput && cooldown <= 0)
         {
             muzzleSmoke.Play();
@@ -105,6 +104,7 @@ public class gun : MonoBehaviour
             {
                 // if it doesn't hit anything, just draw a 50 unit line so it still looks good
                 Vector3 point = muzzlePoint.position + 50 * transform.up;
+
                 AddTrail(muzzlePoint.position, point, 2f);
             }
         }
@@ -115,12 +115,8 @@ public class gun : MonoBehaviour
 
     private void AddTrail(Vector3 pointA, Vector3 pointB, float duration)
     {
-        Debug.Log("a");
-        GameObject bulletTrail = Instantiate(bullet);
-        Debug.Log("b");
-        trail trail = bulletTrail.GetComponent<trail>();
-        Debug.Log("c");
-        trail.Trail(pointA, pointB, duration);
-        Debug.Log("d");
+        GameObject trail = Instantiate(bullet);
+        trail bulletTrail = trail.GetComponent<trail>();
+        bulletTrail.Trail(pointA, pointB, duration);
     }
 }

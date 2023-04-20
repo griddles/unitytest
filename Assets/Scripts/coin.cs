@@ -8,16 +8,18 @@ public class coin : MonoBehaviour
     public LayerMask coinLOSCheck;
     public LayerMask ricochetCheck;
     public LayerMask enemyLOSCheck;
-    public trail bullet;
+    public GameObject bullet;
 
     public bool dead = false;
 
     private playerMovement player;
+    private trail bulletTrail;
 
     void Start()
     {
         Destroy(gameObject, 2f);
-        bullet = Instantiate(bullet);
+        GameObject trail = Instantiate(bullet);
+        bulletTrail = trail.GetComponent<trail>();
 
         player = GameObject.Find("Player").GetComponent<playerMovement>();
     }
@@ -59,7 +61,7 @@ public class coin : MonoBehaviour
                 if (hit.collider.gameObject.CompareTag("Coin :)"))
                 {
                     dead = true;
-                    bullet.Trail(transform.position, coin.transform.position, 2f);
+                    bulletTrail.Trail(transform.position, coin.transform.position, 2f);
                     coin.GetComponent<coin>().Ricochet();
                     Destroy(gameObject);
                     return;
@@ -86,7 +88,7 @@ public class coin : MonoBehaviour
                 {
                     dead = true;
                     player.TimeStop(0.075f);
-                    bullet.Trail(transform.position, enemy.transform.position, 2f);
+                    bulletTrail.Trail(transform.position, enemy.transform.position, 2f);
                     Destroy(gameObject);
                     return;
                 }
@@ -102,11 +104,11 @@ public class coin : MonoBehaviour
             RaycastHit2D hit2 = Physics2D.Raycast(transform.position, spread, Mathf.Infinity, ricochetCheck);
             if (hit2.collider != null)
             {
-                bullet.Trail(transform.position, hit2.point, 2f);
+                bulletTrail.Trail(transform.position, hit2.point, 2f);
             } // if no collision, set the second position to 100 units away
             else
             {
-                bullet.Trail(transform.position, transform.position + (Vector3)spread * 50, 2f);
+                bulletTrail.Trail(transform.position, transform.position + (Vector3)spread * 50, 2f);
             }
             Destroy(gameObject);
             return;
