@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class trail : MonoBehaviour
 {
-    public LineRenderer lineRenderer;
+    private LineRenderer lineRenderer;
 
     void Start()
     {
-        //lineRenderer = GetComponent<LineRenderer>();
+        lineRenderer = GetComponent<LineRenderer>();
     }
 
     public void Trail(Vector3 pointA, Vector3 pointB, float duration)
@@ -34,5 +34,6 @@ public class trail : MonoBehaviour
         }
         trailColor.a = 0;
         lineRenderer.material.color = trailColor;
+        Destroy(gameObject, 0.1f);
     }
 }

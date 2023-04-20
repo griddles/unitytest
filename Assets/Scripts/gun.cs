@@ -7,7 +7,8 @@ using Random = UnityEngine.Random;
 public class gun : MonoBehaviour
 {
     public bool hitscan;
-    public GameObject bulletOrTrail;
+    public GameObject bullet;
+    public trail trail;
     public Transform muzzlePoint;
     public Sprite normalSprite;
     public Sprite sideSprite;
@@ -21,21 +22,12 @@ public class gun : MonoBehaviour
     public GameObject coin;
     public float coinForce;
 
-    private GameObject bullet;
-    private LineRenderer trail;
     private bool shootInput;
     private float cooldown;
 
     void Start()
     {
-        if (hitscan)
-        {
-            trail = bulletOrTrail.GetComponent<LineRenderer>();
-        }
-        else
-        {
-            bullet = bulletOrTrail;
-        }
+        
     }
 
     void Update()
@@ -58,6 +50,7 @@ public class gun : MonoBehaviour
 
     void FixedUpdate()
     {
+        Debug.Log(shootInput + " | " + cooldown);
         if (shootInput && cooldown <= 0)
         {
             muzzleSmoke.Play();
@@ -94,8 +87,7 @@ public class gun : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(muzzlePoint.position, transform.up, Mathf.Infinity, hitLayer);
             if (hit.collider != null)
             {
-                trail.SetPosition(0, muzzlePoint.position);
-                trail.SetPosition(1, hit.point);
+                AddTrail(muzzlePoint.position, hit.point, 2f);
 
                 if (hit.collider.gameObject.GetComponentInParent<enemy>() != null)
                 {
@@ -108,18 +100,27 @@ public class gun : MonoBehaviour
                 {
                     hit.collider.gameObject.GetComponent<coin>().Ricochet();
                 }
-                
             }
             else
             {
                 // if it doesn't hit anything, just draw a 50 unit line so it still looks good
                 Vector3 point = muzzlePoint.position + 50 * transform.up;
-                trail.SetPosition(0, muzzlePoint.position);
-                trail.SetPosition(1, point);
+                AddTrail(muzzlePoint.position, point, 2f);
             }
         }
 
         // set the velocity value in the parent of the parent to the opposite of the bullet's velocity to simulate recoil
         transform.parent.parent.GetComponent<playerMovement>().velocity = -spread * muzzleVelocity * recoil;
+    }
+
+    private void AddTrail(Vector3 pointA, Vector3 pointB, float duration)
+    {
+        Debug.Log("a");
+        GameObject bulletTrail = Instantiate(bullet);
+        Debug.Log("b");
+        trail trail = bulletTrail.GetComponent<trail>();
+        Debug.Log("c");
+        trail.Trail(pointA, pointB, duration);
+        Debug.Log("d");
     }
 }
