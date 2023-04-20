@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class gun : MonoBehaviour
 {
@@ -101,11 +103,12 @@ public class gun : MonoBehaviour
                     // apply knockback to the enemy
                     hit.collider.gameObject.GetComponent<enemy>().Knockback(direction, muzzleVelocity / 8);
                 }
-                // otherwise, if the raycast hits a coin :) layer, call Ricochet() on the coin
-                else if (hit.collider.gameObject.layer == LayerMask.GetMask("coin :)"))
+                // otherwise, if the raycast hit an object with tag "Coin :)", call the coin's ricochet function
+                else if (hit.collider.gameObject.CompareTag("Coin :)"))
                 {
                     hit.collider.gameObject.GetComponent<coin>().Ricochet();
                 }
+                
             }
             else
             {
@@ -118,13 +121,5 @@ public class gun : MonoBehaviour
 
         // set the velocity value in the parent of the parent to the opposite of the bullet's velocity to simulate recoil
         transform.parent.parent.GetComponent<playerMovement>().velocity = -spread * muzzleVelocity * recoil;
-    }
-
-    // coroutine that sets timescale to 0 for 3 frames
-    private IEnumerator ShootStop(float time)
-    {
-        Time.timeScale = 0;
-        yield return new WaitForSecondsRealtime(time);
-        Time.timeScale = 1;
     }
 }

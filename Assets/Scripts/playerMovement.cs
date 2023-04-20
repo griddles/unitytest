@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -248,5 +249,18 @@ public class playerMovement : MonoBehaviour
         {
             animator.SetBool("moving", false);
         }
+    }
+
+    public void TimeStop(float time)
+    {
+        StartCoroutine(ShootStop(time));
+    }
+
+    // coroutine that sets timescale to 0
+    private IEnumerator ShootStop(float time)
+    {
+        Time.timeScale = 0;
+        yield return new WaitForSecondsRealtime(time);
+        Time.timeScale = 1;
     }
 }
