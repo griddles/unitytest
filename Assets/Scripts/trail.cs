@@ -8,12 +8,14 @@ public class trail : MonoBehaviour
 
     void Start()
     {
-        lineRenderer = GetComponent<LineRenderer>();
+        
     }
 
     public void Trail(Vector3 pointA, Vector3 pointB, float duration)
     {
         Debug.Log("a");
+
+        lineRenderer = GetComponent<LineRenderer>();
 
         // set the start and end points of the trail
         lineRenderer.SetPosition(0, pointA);

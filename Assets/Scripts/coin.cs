@@ -19,6 +19,7 @@ public class coin : MonoBehaviour
     {
         Destroy(gameObject, 2f);
         GameObject trail = Instantiate(bullet);
+        Destroy(trail, 5f);
         bulletTrail = trail.GetComponent<trail>();
 
         player = GameObject.Find("Player").GetComponent<playerMovement>();

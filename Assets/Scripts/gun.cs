@@ -86,7 +86,8 @@ public class gun : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(muzzlePoint.position, transform.up, Mathf.Infinity, hitLayer);
             if (hit.collider != null)
             {
-                AddTrail(muzzlePoint.position, hit.point, 2f);
+                //Debug.Log(muzzlePoint.position + " | " + hit.point);
+                AddTrail(muzzlePoint.position, new Vector3(hit.point.x, hit.point.y, 0), 2);
 
                 if (hit.collider.gameObject.GetComponentInParent<enemy>() != null)
                 {
@@ -105,7 +106,7 @@ public class gun : MonoBehaviour
                 // if it doesn't hit anything, just draw a 50 unit line so it still looks good
                 Vector3 point = muzzlePoint.position + 50 * transform.up;
 
-                AddTrail(muzzlePoint.position, point, 2f);
+                AddTrail(muzzlePoint.position, point, 2);
             }
         }
 
@@ -115,7 +116,7 @@ public class gun : MonoBehaviour
 
     private void AddTrail(Vector3 pointA, Vector3 pointB, float duration)
     {
-        GameObject trail = Instantiate(bullet);
+        GameObject trail = Instantiate(bullet, Vector3.zero, Quaternion.identity);
         trail bulletTrail = trail.GetComponent<trail>();
         bulletTrail.Trail(pointA, pointB, duration);
     }
