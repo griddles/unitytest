@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2945075730399873585}
   - component: {fileID: 2401214513012499868}
   m_Layer: 9
-  m_Name: zombie
+  m_Name: filth
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35,7 +35,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3467540496812411361
 SpriteRenderer:
@@ -79,7 +79,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -1388978576358127121, guid: becedbef1630c3542b61d4952a49d0c4, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.3018868, g: 0.3018868, b: 0.3018868, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -118,7 +118,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3700376587989936926}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5027da6173944da438612e010ed1fd52, type: 3}
   m_Name: 
@@ -130,6 +130,9 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 8
+  blood: {fileID: 7707541298261893261, guid: d45c13896a29ea742a01bc055a636cf2, type: 3}
+  death: {fileID: 7707541298261893261, guid: fba81bbd9a1b5ce45977662757362082, type: 3}
+  maxHealth: 2
 --- !u!68 &2959582965360073604
 EdgeCollider2D:
   m_ObjectHideFlags: 0
@@ -216,7 +219,7 @@ Rigidbody2D:
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 7
+  m_Constraints: 4
 --- !u!114 &2401214513012499868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,10 +262,10 @@ MonoBehaviour:
   - {x: 0.040437862, y: -0.1001025, z: 0}
   m_ShapePathHash: 1397726397
   m_InstanceId: 0
-  m_ShadowShape2DComponent: {fileID: 0}
+  m_ShadowShape2DComponent: {fileID: 2959582965360073604}
   m_ShadowShape2DProvider:
-    rid: -2
-  m_ShadowCastingSource: 1
+    rid: 8427845217908162560
+  m_ShadowCastingSource: 2
   m_ShadowMesh:
     m_Mesh: {fileID: 0}
     m_LocalBounds:
@@ -277,5 +280,5 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+    - rid: 8427845217908162560
+      type: {class: ShadowShape2DProvider_Collider2D, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.2D.Runtime}

@@ -5,8 +5,12 @@ public class bulletDestruction : MonoBehaviour
     public int trailLength;
     public LayerMask hitLayer;
 
+    public float damage;
+
     private LineRenderer trail;
     private Vector3 lastFrame;
+
+    private bool dead = false;
 
     void Start()
     {
@@ -36,7 +40,7 @@ public class bulletDestruction : MonoBehaviour
 
         // check if there's an object in the way of the bullet (collision detection at home)
         RaycastHit2D hit = Physics2D.Linecast(lastFrame, transform.position, hitLayer);
-        if (hit.collider != null)
+        if (hit.collider != null && !dead)
         {
             Collision(hit.collider);
         }
@@ -53,8 +57,9 @@ public class bulletDestruction : MonoBehaviour
             float magnitude = GetComponent<Rigidbody2D>().velocity.magnitude;
             Vector2 direction = GetComponent<Rigidbody2D>().velocity.normalized;
             // apply knockback to the enemy
-            collision.gameObject.GetComponent<enemy>().Knockback(direction, magnitude / 8);
+            collision.gameObject.GetComponent<enemy>().Damage(direction, magnitude / 8, damage);
         }
+        dead = true;
         Destroy(gameObject, 0.02f);
     }
 }

@@ -1,6 +1,7 @@
 using NUnit.Framework.Internal.Commands;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class enemy : MonoBehaviour
@@ -12,6 +13,11 @@ public class enemy : MonoBehaviour
     public float speed;
 
     public LayerMask playerLayer;
+
+    public ParticleSystem blood;
+    public ParticleSystem death;
+
+    public float maxHealth;
 
     private int nearbyAllies; // number of other enemies nearby
 
@@ -25,10 +31,13 @@ public class enemy : MonoBehaviour
 
     private Rigidbody2D rigidbody;
 
+    private float health;
+
     void Start()
     {
         player = GameObject.FindWithTag("Player").GetComponent<playerMovement>();
         rigidbody = GetComponent<Rigidbody2D>();
+        health = maxHealth;
     }
 
     void Update()
@@ -149,8 +158,25 @@ public class enemy : MonoBehaviour
         return movement;
     }
 
-    public void Knockback(Vector3 direction, float force)
+    public void Damage(Vector3 direction, float force, float value)
     {
+        health -= value;
+
         knockback = direction * force;
+
+        // spawn blood particles in the direction of the knockback
+        ParticleSystem bloodParticles = Instantiate(blood, new Vector3 (transform.position.x, transform.position.y, 0.8f), Quaternion.identity);
+        bloodParticles.transform.LookAt(transform.position + knockback);
+        Destroy(bloodParticles.gameObject, 7);
+
+        Debug.Log(health);
+
+        if (health < 1)
+        {
+            ParticleSystem deathParticles = Instantiate(death, new Vector3(transform.position.x, transform.position.y, 0.8f), Quaternion.identity);
+            deathParticles.transform.LookAt(transform.position + knockback);
+            Destroy(deathParticles.gameObject, 7);
+            Destroy(gameObject);
+        }
     }
 }

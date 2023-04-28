@@ -4986,11 +4986,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitscan: 0
   bullet: {fileID: 7621405058725597297, guid: 758984999d21e0542a39847f59375339, type: 3}
-  trail: {fileID: 3614912160873759746, guid: cbede616c3a2d324a8b3069666e30101, type: 3}
   muzzlePoint: {fileID: 855059168719364480}
   normalSprite: {fileID: 21300000, guid: 388ba83feaa943f48ad766ef22d9bceb, type: 3}
   sideSprite: {fileID: 21300000, guid: cc4e585053c4b6e4882465af7baa0cef, type: 3}
   muzzleVelocity: 80
+  damage: 1
   rateOfFire: 10
   bullets: 1
   spread: 1

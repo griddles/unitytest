@@ -13,6 +13,7 @@ public class gun : MonoBehaviour
     public Sprite normalSprite;
     public Sprite sideSprite;
     public float muzzleVelocity;
+    public float damage;
     public float rateOfFire; // in ticks between shots
     public float bullets;
     public float spread;
@@ -75,6 +76,7 @@ public class gun : MonoBehaviour
                 float angle = Random.Range(-this.spread, this.spread);
                 spread = Quaternion.Euler(0, 0, angle) * spread;
                 GameObject newBullet = Instantiate(bullet, behind, Quaternion.identity);
+                newBullet.GetComponent<bulletDestruction>().damage = damage;
                 newBullet.GetComponent<Rigidbody2D>().velocity = spread * muzzleVelocity;
 
                 Destroy(newBullet, 2f);
@@ -93,12 +95,12 @@ public class gun : MonoBehaviour
                 {
                     Vector2 direction = hit.normal;
                     // apply knockback to the enemy
-                    hit.collider.gameObject.GetComponent<enemy>().Knockback(direction, muzzleVelocity / 8);
+                    hit.collider.gameObject.GetComponent<enemy>().Damage(-direction, muzzleVelocity / 8, damage);
                 }
                 // otherwise, if the raycast hit an object with tag "Coin :)", call the coin's ricochet function
                 else if (hit.collider.gameObject.CompareTag("Coin :)"))
                 {
-                    hit.collider.gameObject.GetComponent<coin>().Ricochet();
+                    hit.collider.gameObject.GetComponent<coin>().Ricochet(damage * 1.2f);
                 }
             }
             else

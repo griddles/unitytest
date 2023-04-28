@@ -25,7 +25,7 @@ public class coin : MonoBehaviour
         player = GameObject.Find("Player").GetComponent<playerMovement>();
     }
 
-    public void Ricochet()
+    public void Ricochet(float damage)
     {
         if (dead)
         {
@@ -63,7 +63,7 @@ public class coin : MonoBehaviour
                 {
                     dead = true;
                     bulletTrail.Trail(transform.position, coin.transform.position, 2f);
-                    coin.GetComponent<coin>().Ricochet();
+                    coin.GetComponent<coin>().Ricochet(damage * 1.2f);
                     Destroy(gameObject);
                     return;
                 }
@@ -90,6 +90,10 @@ public class coin : MonoBehaviour
                     dead = true;
                     player.TimeStop(0.075f);
                     bulletTrail.Trail(transform.position, enemy.transform.position, 2f);
+                    // damage the enemy
+                    Vector2 direction = hit.normal;
+                    hit.collider.gameObject.GetComponent<enemy>().Damage(-direction, damage, damage);
+                    // destroy the coin
                     Destroy(gameObject);
                     return;
                 }
