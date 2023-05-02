@@ -16,7 +16,11 @@ public class GameManager : MonoBehaviour
 
     public TextMeshProUGUI waveText;
 
+    public bool gameStarted = false;
     public bool gameOver = false;
+
+    public GameObject spawnRoom;
+    public GameObject spawnDoor;
 
     private int wave = 1;
 
@@ -31,13 +35,11 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         virtualCamera = GameObject.FindWithTag("CameraController").GetComponent<Cinemachine.CinemachineVirtualCamera>();
-
-        WaveStart();
     }
 
     void FixedUpdate()
     {
-        if (GameObject.FindGameObjectsWithTag("Enemy").Length < 1) 
+        if (GameObject.FindGameObjectsWithTag("Enemy").Length < 1 && gameStarted && !gameOver) 
         {
             WaveEnd();
         }
@@ -75,10 +77,7 @@ public class GameManager : MonoBehaviour
         supportCooldown -= 1;
         bossCooldown -= 1;
 
-        if (!gameOver)
-        {
-            WaveStart();
-        }
+        WaveStart();
     }
 
     public void GameEnd()
@@ -92,6 +91,17 @@ public class GameManager : MonoBehaviour
         virtualCamera.Follow = gameObject.transform;
         // start a coroutine that moves this object to the center of the screen
         StartCoroutine(LerpCamera());
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!gameStarted)
+        {
+            gameStarted = true;
+            spawnRoom.SetActive(false);
+            spawnDoor.SetActive(true);
+            WaveStart();
+        }
     }
 
     IEnumerator KillEnemies(GameObject[] enemies)

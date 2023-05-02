@@ -257,10 +257,10 @@ MonoBehaviour:
   m_UseNormalMap: 0
   m_ShadowsEnabled: 1
   m_ShadowIntensity: 1
-  m_ShadowSoftness: 0
+  m_ShadowSoftness: 0.3
   m_ShadowSoftnessFalloffIntensity: 0.5
   m_ShadowVolumeIntensityEnabled: 1
-  m_ShadowVolumeIntensity: 0.9
+  m_ShadowVolumeIntensity: 1
   m_Vertices:
   - position: {x: 0.9985302, y: 0.9985302, z: 0}
     color: {r: 0.70710677, g: 0.70710677, b: 0, a: 0}
@@ -747,7 +747,7 @@ Transform:
   - {fileID: 1438923229695381697}
   - {fileID: 3968760623767676018}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &5679211256252498400
 BoxCollider2D:
@@ -843,6 +843,7 @@ MonoBehaviour:
   audioSource: {fileID: 0}
   death: {fileID: 7707541298261893261, guid: fba81bbd9a1b5ce45977662757362082, type: 3}
   spriteRenderer: {fileID: 4848567006688921605}
+  gameManager: {fileID: 0}
   speed: 7
   movementSnapping: 2
   dashCooldown: 8
