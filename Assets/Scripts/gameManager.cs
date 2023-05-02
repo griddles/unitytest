@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
 
     public TextMeshProUGUI waveText;
 
+    public bool gameOver = false;
+
     private int wave = 1;
 
     private int strongCooldown = 5;
@@ -24,8 +26,12 @@ public class GameManager : MonoBehaviour
 
     private List<GameObject> activeEnemies;
 
+    private Cinemachine.CinemachineVirtualCamera virtualCamera;
+
     void Start()
     {
+        virtualCamera = GameObject.FindWithTag("CameraController").GetComponent<Cinemachine.CinemachineVirtualCamera>();
+
         WaveStart();
     }
 
@@ -46,8 +52,6 @@ public class GameManager : MonoBehaviour
         // randomly pick 2 enemy types from normalEnemies
         int normalEnemy1 = Random.Range(0, normalEnemies.Count);
         int normalEnemy2 = Random.Range(0, normalEnemies.Count);
-
-        Debug.Log(normalEnemy1 + " | " + normalEnemy2);
 
         // spawn a random number of each type from 3 to 5 + wave, capped at 12
         int normalEnemy1Count = Mathf.Clamp(Random.Range(3, 5 + wave), 0, 12);
@@ -71,6 +75,43 @@ public class GameManager : MonoBehaviour
         supportCooldown -= 1;
         bossCooldown -= 1;
 
-        WaveStart();
+        if (!gameOver)
+        {
+            WaveStart();
+        }
+    }
+
+    public void GameEnd()
+    {
+        gameOver = true;
+        // get a list of all enemies
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        // start a coroutine to kill each enemy in rapid succession
+        StartCoroutine(KillEnemies(enemies));
+        transform.position = virtualCamera.transform.position;
+        virtualCamera.Follow = gameObject.transform;
+        // start a coroutine that moves this object to the center of the screen
+        StartCoroutine(LerpCamera());
+    }
+
+    IEnumerator KillEnemies(GameObject[] enemies)
+    {
+        foreach (GameObject enemy in enemies)
+        {
+            enemy.GetComponent<enemy>().Damage(Vector3.forward, 5, 999);
+            yield return new WaitForSecondsRealtime(0.2f);
+        }
+    }
+
+    IEnumerator LerpCamera()
+    {
+        float t = 0;
+        while (t < 10)
+        {
+            t += Time.deltaTime;
+            transform.position = Vector3.Lerp(transform.position, new Vector3(0, 0, 0), t / 10);
+            Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, 21.5f, t / 10);
+            yield return null;
+        }
     }
 }

@@ -12,6 +12,10 @@ public class playerMovement : MonoBehaviour
     public Camera camera;
     public LineRenderer grappleLine;
     public Animator animator;
+    public AudioSource audioSource;
+    public ParticleSystem death;
+    public SpriteRenderer spriteRenderer;
+    public GameManager gameManager;
 
     [Header("Movement Settings")]
     public float speed;
@@ -37,8 +41,13 @@ public class playerMovement : MonoBehaviour
     public float minCamSize;
     public float maxCamSize;
 
-    [Header("Other")]
+    [Header("Layers")]
     public LayerMask wallLayer;
+    public LayerMask enemyLayer;
+
+    [Header("SFX")]
+    public AudioClip hurtSound;
+    public AudioClip dashSound;
 
     // input
     private float xInput;
@@ -66,8 +75,8 @@ public class playerMovement : MonoBehaviour
         currentDashMeter = dashMeter;
         currentHealth = maxHealth;
         camera = Camera.main;
-
-        // find object with tag CameraController
+        audioSource = GetComponent<AudioSource>();
+        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         Cinemachine.CinemachineVirtualCamera cameraController = GameObject.FindGameObjectWithTag("CameraController").GetComponent<Cinemachine.CinemachineVirtualCamera>();
         cameraController.Follow = transform;
     }
@@ -249,6 +258,37 @@ public class playerMovement : MonoBehaviour
         {
             animator.SetBool("moving", false);
         }
+    }
+
+    // if the player gets hit by an enemy, take damage
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            currentHealth -= collision.gameObject.GetComponent<enemy>().damage;
+            audioSource.PlayOneShot(hurtSound);
+            if (currentHealth <= 0)
+            {
+                Die();
+            }
+        }
+    }
+
+    public void Heal(float healValue)
+    {
+        currentHealth += healValue;
+
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+    }
+
+    public void Die()
+    {
+        Instantiate(death, transform.position, Quaternion.Euler(-90, 90, 180));
+        gameManager.GameEnd();
+        Destroy(gameObject);
     }
 
     public void TimeStop(float time)

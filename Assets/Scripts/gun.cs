@@ -22,13 +22,15 @@ public class gun : MonoBehaviour
     public ParticleSystem muzzleSmoke;
     public GameObject coin;
     public float coinForce;
+    public AudioClip shootSound;
 
     private bool shootInput;
     private float cooldown;
+    private AudioSource audioSource;
 
     void Start()
     {
-        
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -54,6 +56,7 @@ public class gun : MonoBehaviour
         if (shootInput && cooldown <= 0)
         {
             muzzleSmoke.Play();
+            audioSource.PlayOneShot(shootSound);
             Shoot();
             cooldown = rateOfFire;
             shootInput = false;
@@ -88,7 +91,6 @@ public class gun : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(muzzlePoint.position, transform.up, Mathf.Infinity, hitLayer);
             if (hit.collider != null)
             {
-                //Debug.Log(muzzlePoint.position + " | " + hit.point);
                 AddTrail(muzzlePoint.position, new Vector3(hit.point.x, hit.point.y, 0), 2);
 
                 if (hit.collider.gameObject.GetComponentInParent<enemy>() != null)
