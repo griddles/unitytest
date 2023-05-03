@@ -132,7 +132,14 @@ MonoBehaviour:
   blood: {fileID: 7707541298261893261, guid: d45c13896a29ea742a01bc055a636cf2, type: 3}
   death: {fileID: 7707541298261893261, guid: fba81bbd9a1b5ce45977662757362082, type: 3}
   maxHealth: 4
-  damage: 40
+  contactDamage: 35
+  ranged: 1
+  projectile: {fileID: 4428286884302881163, guid: ec28199daa0733147aa3839fe893c0e2, type: 3}
+  projectileSpeed: 20
+  projectileCooldown: 15
+  burstCount: 1
+  burstSpread: 0
+  burstInterval: 0
 --- !u!68 &2959582965360073604
 EdgeCollider2D:
   m_ObjectHideFlags: 0

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2959582965360073604}
   - component: {fileID: 2945075730399873585}
   m_Layer: 9
-  m_Name: filth
+  m_Name: schism
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -1388978576358127121, guid: becedbef1630c3542b61d4952a49d0c4, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.31132078, g: 0.31132078, b: 0.31132078, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -123,23 +123,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   awareness: 10
-  sightRange: 10
-  allyRange: 8
-  speed: 8
+  sightRange: 15
+  allyRange: 12
+  speed: 3
   playerLayer:
     serializedVersion: 2
     m_Bits: 8
   blood: {fileID: 7707541298261893261, guid: d45c13896a29ea742a01bc055a636cf2, type: 3}
   death: {fileID: 7707541298261893261, guid: fba81bbd9a1b5ce45977662757362082, type: 3}
-  maxHealth: 2
-  contactDamage: 20
-  ranged: 0
-  projectile: {fileID: 0}
-  projectileSpeed: 0
-  projectileCooldown: 0
-  burstCount: 0
+  maxHealth: 7
+  contactDamage: 12
+  ranged: 1
+  projectile: {fileID: 4428286884302881163, guid: ec28199daa0733147aa3839fe893c0e2, type: 3}
+  projectileSpeed: 16
+  projectileCooldown: 30
+  burstCount: 4
   burstSpread: 0
-  burstInterval: 0
+  burstInterval: 0.2
 --- !u!68 &2959582965360073604
 EdgeCollider2D:
   m_ObjectHideFlags: 0

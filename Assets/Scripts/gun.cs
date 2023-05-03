@@ -79,10 +79,9 @@ public class gun : MonoBehaviour
                 float angle = Random.Range(-this.spread, this.spread);
                 spread = Quaternion.Euler(0, 0, angle) * spread;
                 GameObject newBullet = Instantiate(bullet, behind, Quaternion.identity);
-                newBullet.GetComponent<bulletDestruction>().damage = damage;
+                newBullet.GetComponent<projectile>().damage = damage;
+                newBullet.GetComponent<projectile>().parent = gameObject;
                 newBullet.GetComponent<Rigidbody2D>().velocity = spread * muzzleVelocity;
-
-                Destroy(newBullet, 2f);
             }
         }
         else

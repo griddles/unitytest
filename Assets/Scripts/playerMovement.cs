@@ -265,7 +265,11 @@ public class playerMovement : MonoBehaviour
     {
         if (collision.gameObject.tag == "Enemy")
         {
-            currentHealth -= collision.gameObject.GetComponent<enemy>().damage;
+            enemy enemy = collision.gameObject.GetComponent<enemy>();
+            currentHealth -= enemy.contactDamage;
+            // get the direction of the enemy relative to the player
+            Vector2 direction = (transform.position - collision.transform.position).normalized;
+            enemy.Damage(direction, 5, 0);
             audioSource.PlayOneShot(hurtSound);
             if (currentHealth <= 0)
             {
@@ -284,11 +288,21 @@ public class playerMovement : MonoBehaviour
         }
     }
 
+    public void Damage(Vector3 direction, float force, float damage)
+    {
+        currentHealth -= damage;
+        movement = direction * force;
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
     public void Die()
     {
         Instantiate(death, transform.position, Quaternion.Euler(-90, 90, 180));
         gameManager.GameEnd();
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
     public void TimeStop(float time)

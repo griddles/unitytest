@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 6511899407631067408}
   - component: {fileID: 8050806786781484697}
+  - component: {fileID: 5146734648140018228}
   - component: {fileID: 2249989393401587302}
   - component: {fileID: 6877444616320697703}
   - component: {fileID: 2990003378494228166}
-  - component: {fileID: 5146734648140018228}
   m_Layer: 6
   m_Name: shotgunPellet
   m_TagString: Untagged
@@ -88,6 +88,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &5146734648140018228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 426756300801677918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05d6fc81c3386d449b41f09eeb3b73ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trailLength: 10
+  hitLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  damage: 0
+  lifetime: 3
+  parent: {fileID: 0}
 --- !u!58 &2249989393401587302
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -263,19 +282,3 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &5146734648140018228
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 426756300801677918}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05d6fc81c3386d449b41f09eeb3b73ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  trailLength: 10
-  hitLayer:
-    serializedVersion: 2
-    m_Bits: 512

@@ -1,11 +1,15 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
-public class bulletDestruction : MonoBehaviour
+public class projectile : MonoBehaviour
 {
     public int trailLength;
     public LayerMask hitLayer;
 
     public float damage;
+    public float lifetime;
+
+    public GameObject parent;
 
     private LineRenderer trail;
     private Vector3 lastFrame;
@@ -16,6 +20,7 @@ public class bulletDestruction : MonoBehaviour
     {
         trail = GetComponent<LineRenderer>();
         lastFrame = transform.position;
+        Destroy(gameObject, lifetime);
     }
 
     private void FixedUpdate()
@@ -38,7 +43,7 @@ public class bulletDestruction : MonoBehaviour
             trail.SetPosition(trailLength - 1, lastFrame);
         }
 
-        // check if there's an object in the way of the bullet (collision detection at home)
+        // check if there's an object in the way of the bullet (collision detection at home) (is actually way better than unity's built in collision detection)
         RaycastHit2D hit = Physics2D.Linecast(lastFrame, transform.position, hitLayer);
         if (hit.collider != null && !dead)
         {
@@ -50,15 +55,31 @@ public class bulletDestruction : MonoBehaviour
 
     private void Collision(Collider2D collision)
     {
+        if (parent != null)
+        {
+            if (collision.gameObject.tag == parent.tag)
+            {
+                return;
+            }
+        }
         // check if the object's parent has an enemy script on it
         if (collision.gameObject.GetComponentInParent<enemy>() != null)
         {
+
             // get the current magnitude and direction of the bullet's velocity
             float magnitude = GetComponent<Rigidbody2D>().velocity.magnitude;
             Vector2 direction = GetComponent<Rigidbody2D>().velocity.normalized;
             // apply knockback to the enemy
             collision.gameObject.GetComponent<enemy>().Damage(direction, magnitude / 8, damage);
         }
+        // check if the object has a playermovement script, and damage the player
+        else if (collision.gameObject.GetComponent<playerMovement>() != null)
+        {
+            // get the direction that the bullet is travelling in
+            Vector2 direction = GetComponent<Rigidbody2D>().velocity.normalized;
+            collision.gameObject.GetComponent<playerMovement>().Damage(direction, 2, damage * 10);
+        }
+
         dead = true;
         Destroy(gameObject, 0.02f);
     }
