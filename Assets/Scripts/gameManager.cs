@@ -107,6 +107,21 @@ public class GameManager : MonoBehaviour
         {
             Instantiate(normalEnemies[normalEnemy2], new Vector3(Random.Range(-arenaX, arenaX), Random.Range(-arenaY, arenaY), 0), Quaternion.identity);
         }
+
+        // if strongenemycooldown is 0 or lower, give a 75% chance to spawn strong enemies
+        if (strongCooldown <= 0 && Random.Range(0, 4) != 0)
+        {
+            // randomly pick 1 enemy type from strongEnemies
+            int strongEnemy1 = Random.Range(0, strongEnemies.Count);
+            int strongEnemy1Count = Mathf.Clamp(Random.Range(1, strongEnemyCounts[strongEnemy1] + wave), 0, strongEnemyCounts[strongEnemy1] * 2);
+            // spawn the enemies
+            for (int i = 0; i < strongEnemy1Count; i++)
+            {
+                Instantiate(strongEnemies[strongEnemy1], new Vector3(Random.Range(-arenaX, arenaX), Random.Range(-arenaY, arenaY), 0), Quaternion.identity);
+            }
+            // reset the cooldown
+            strongCooldown = 5;
+        }
     }
 
     public void WaveEnd()

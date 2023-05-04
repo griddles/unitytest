@@ -76,7 +76,7 @@ public class playerMovement : MonoBehaviour
         currentHealth = maxHealth;
         camera = Camera.main;
         audioSource = GetComponent<AudioSource>();
-        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        //gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         Cinemachine.CinemachineVirtualCamera cameraController = GameObject.FindGameObjectWithTag("CameraController").GetComponent<Cinemachine.CinemachineVirtualCamera>();
         cameraController.Follow = transform;
     }

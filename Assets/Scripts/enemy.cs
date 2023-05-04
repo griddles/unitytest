@@ -40,16 +40,20 @@ public class enemy : MonoBehaviour
     private Vector3 knockback;
 
     private Rigidbody2D rigidbody;
+    private Animator animator;
 
     private float currentProjectileCooldown;
 
     private float health;
+
+    private int direction;
 
     void Start()
     {
         player = GameObject.FindWithTag("Player").GetComponent<playerMovement>();
         rigidbody = GetComponent<Rigidbody2D>();
         health = maxHealth;
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -88,6 +92,29 @@ public class enemy : MonoBehaviour
                 {
                     playerPos = hit.transform.position;
                     playerSeen = true;
+                    // get the direction in degrees to the player
+                    float rawDirection = Mathf.Atan2(playerPos.y - transform.position.y, playerPos.x - transform.position.x) * Mathf.Rad2Deg;
+                    Debug.Log(rawDirection);
+                    // up = 0, right = 1, down = 2, left = 3
+                    // -45 to 45 = right, 45 to 135 = down, 135 to -135 = left, -135 to -45 = up
+                    if (rawDirection > -45 && rawDirection < 45)
+                    {
+                        direction = 1;
+                    }
+                    else if (rawDirection > 45 && rawDirection < 135)
+                    {
+                        direction = 2;
+                    }
+                    else if (rawDirection > 135 || rawDirection < -135)
+                    {
+                        direction = 3;
+                    }
+                    else if (rawDirection > -135 && rawDirection < -45)
+                    {
+                        direction = 0;
+                    }
+
+                    animator.SetInteger("direction", direction);
                 }
             }
 
