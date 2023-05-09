@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class gunManager : MonoBehaviour
@@ -8,6 +9,18 @@ public class gunManager : MonoBehaviour
     public List<KeyCode> inputKeys;
     public List<GameObject> guns;
 
+    [Header("Cooldowns")]
+    public float coreCooldown;
+    public float pierceCooldown;
+
+    [HideInInspector]
+    public float currentCoreCooldown;
+    [HideInInspector]
+    public float currentPierceCooldown;
+
+    private RectTransform coreCooldownBar;
+    private RectTransform pierceCooldownBar;
+
     private GameObject currentGun;
 
     void Start()
@@ -15,6 +28,8 @@ public class gunManager : MonoBehaviour
         currentGun = guns[0];
         currentGun = Instantiate(currentGun, transform.position, transform.rotation, transform);
         camera = Camera.main;
+        coreCooldownBar = GameObject.FindWithTag("CoreMeter").GetComponent<RectTransform>();
+        pierceCooldownBar = GameObject.FindWithTag("PierceMeter").GetComponent<RectTransform>();
     }
 
     void Update()
@@ -68,6 +83,22 @@ public class gunManager : MonoBehaviour
             currentGun.GetComponent<SpriteRenderer>().sprite = currentGun.GetComponent<gun>().normalSprite;
             currentGun.GetComponent<SpriteRenderer>().flipX = true;
         }
+
+        // handle cooldowns and bars
+        // core
+        currentCoreCooldown--;
+        if (currentCoreCooldown <= 0)
+        {
+            currentCoreCooldown = 0;
+        }
+        coreCooldownBar.localRotation = Quaternion.Euler(0, 0, 180 * (1 - (currentCoreCooldown / coreCooldown)));
+        // pierce
+        currentPierceCooldown--;
+        if (currentPierceCooldown <= 0)
+        {
+            currentPierceCooldown = 0;
+        }
+        pierceCooldownBar.localRotation = Quaternion.Euler(0, 0, 180 * (1 - (currentPierceCooldown / pierceCooldown)));
     }
 
     private void SwitchGun(GameObject newGun)

@@ -39,16 +39,6 @@ public class gun : MonoBehaviour
         {
             shootInput = true;
         }
-
-        // if the player right clicks, spawn a coin at the player and give it coinForce towards the mouse
-        if (Input.GetMouseButtonDown(1))
-        {
-            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector3 direction = mousePos - transform.position;
-            direction.Normalize();
-            GameObject newCoin = Instantiate(coin, transform.position, Quaternion.identity);
-            newCoin.GetComponent<Rigidbody2D>().velocity = coinForce * direction;
-        }
     }
 
     void FixedUpdate()

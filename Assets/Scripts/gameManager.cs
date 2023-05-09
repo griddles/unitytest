@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class GameManager : MonoBehaviour
 {
     public GameObject playerPrefab;
-
-    public float arenaX;
-    public float arenaY;
 
     public List<GameObject> normalEnemies;
     public List<int> normalEnemyCounts;
@@ -27,6 +25,12 @@ public class GameManager : MonoBehaviour
     public GameObject spawnRoom;
     public GameObject spawnDoor;
 
+    public AudioClip deathSound;
+
+    public AudioSource audioSource;
+
+    public Tilemap ground;
+
     private GameObject player;
 
     private int wave = 1;
@@ -37,11 +41,36 @@ public class GameManager : MonoBehaviour
 
     private Cinemachine.CinemachineVirtualCamera virtualCamera;
 
+    private List<Vector3> spawnPoints;
+
     void Start()
     {
         virtualCamera = GameObject.FindWithTag("CameraController").GetComponent<Cinemachine.CinemachineVirtualCamera>();
         player = GameObject.FindWithTag("Player");
+        audioSource = GetComponent<AudioSource>();
+
+        // get all enemy spawnable points
+        spawnPoints = new List<Vector3>();
+        for (int n = ground.cellBounds.xMin; n < ground.cellBounds.xMax; n++)
+        {
+            for (int p = ground.cellBounds.yMin; p < ground.cellBounds.yMax; p++)
+            {
+                Vector3Int localPlace = new Vector3Int(n, p, (int)ground.transform.position.y);
+                Vector3 place = ground.CellToWorld(localPlace);
+                if (ground.HasTile(localPlace))
+                {
+                    //Tile at "place"
+                    spawnPoints.Add(place);
+                }
+                else
+                {
+                    //No tile at "place"
+                }
+            }
+        }
     }
+
+    
 
     void FixedUpdate()
     {
@@ -101,11 +130,13 @@ public class GameManager : MonoBehaviour
         // spawn the enemies
         for (int i = 0; i < normalEnemy1Count; i++)
         {
-            Instantiate(normalEnemies[normalEnemy1], new Vector3(Random.Range(-arenaX, arenaX), Random.Range(-arenaY, arenaY), 0), Quaternion.identity);
+            Vector2 spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
+            Instantiate(normalEnemies[normalEnemy1], spawnPoint, Quaternion.identity);
         }
         for (int i = 0; i < normalEnemy2Count; i++)
         {
-            Instantiate(normalEnemies[normalEnemy2], new Vector3(Random.Range(-arenaX, arenaX), Random.Range(-arenaY, arenaY), 0), Quaternion.identity);
+            Vector2 spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
+            Instantiate(normalEnemies[normalEnemy2], spawnPoint, Quaternion.identity);
         }
 
         // if strongenemycooldown is 0 or lower, give a 75% chance to spawn strong enemies
@@ -117,7 +148,8 @@ public class GameManager : MonoBehaviour
             // spawn the enemies
             for (int i = 0; i < strongEnemy1Count; i++)
             {
-                Instantiate(strongEnemies[strongEnemy1], new Vector3(Random.Range(-arenaX, arenaX), Random.Range(-arenaY, arenaY), 0), Quaternion.identity);
+                Vector2 spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
+                Instantiate(strongEnemies[strongEnemy1], spawnPoint, Quaternion.identity);
             }
             // reset the cooldown
             strongCooldown = 5;
@@ -164,6 +196,13 @@ public class GameManager : MonoBehaviour
         {
             enemy.GetComponent<enemy>().Damage(Vector3.forward, 5, 999);
             yield return new WaitForSecondsRealtime(0.2f);
+        }
+
+        // cleanup just in case
+        GameObject[] cleanup = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject enemy in cleanup)
+        {
+            Destroy(enemy);
         }
     }
 

@@ -12,7 +12,7 @@ public class enemy : MonoBehaviour
 
     public float speed;
 
-    public LayerMask playerLayer;
+    public LayerMask sightLayer;
 
     public ParticleSystem blood;
     public ParticleSystem death;
@@ -28,6 +28,7 @@ public class enemy : MonoBehaviour
     public float burstCount;
     public float burstSpread;
     public float burstInterval;
+    public float animationTime; // in seconds
 
     private int nearbyAllies;
 
@@ -84,24 +85,24 @@ public class enemy : MonoBehaviour
         // if the player is in LOS and view distance, get their current position
         if (player != null)
         {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, player.transform.position - transform.position, sightRange, playerLayer);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, player.transform.position - transform.position, Mathf.Infinity, sightLayer);
             // check to see if the raycast actually hit
             if (hit.collider != null)
             {
+                Debug.Log(hit.collider.name);
                 if (hit.collider.tag == "Player")
                 {
                     playerPos = hit.transform.position;
                     playerSeen = true;
                     // get the direction in degrees to the player
                     float rawDirection = Mathf.Atan2(playerPos.y - transform.position.y, playerPos.x - transform.position.x) * Mathf.Rad2Deg;
-                    Debug.Log(rawDirection);
                     // up = 0, right = 1, down = 2, left = 3
-                    // -45 to 45 = right, 45 to 135 = down, 135 to -135 = left, -135 to -45 = up
+                    // -45 to 45 = right, -45 to -135 = down, 135 to -135 = left, 135 to 45 = up
                     if (rawDirection > -45 && rawDirection < 45)
                     {
                         direction = 1;
                     }
-                    else if (rawDirection > 45 && rawDirection < 135)
+                    else if (rawDirection < -45 && rawDirection > -135)
                     {
                         direction = 2;
                     }
@@ -109,10 +110,11 @@ public class enemy : MonoBehaviour
                     {
                         direction = 3;
                     }
-                    else if (rawDirection > -135 && rawDirection < -45)
+                    else if (rawDirection > 45 && rawDirection < 135)
                     {
                         direction = 0;
                     }
+                    
 
                     animator.SetInteger("direction", direction);
                 }
@@ -136,9 +138,9 @@ public class enemy : MonoBehaviour
             Vector3 movement;
 
             // decide between moving and shooting, if the enemy is ranged
-            int shootChance = Random.Range(0, 2);
+            int shootChance = Random.Range(0, 1);
 
-            if (shootChance > 0 && ranged && playerSeen && currentProjectileCooldown <= 0) 
+            if (shootChance == 0 && ranged && playerSeen && currentProjectileCooldown <= 0) 
             {
                 // shoot at the player
                 StartCoroutine(ShootBurst());
@@ -266,6 +268,9 @@ public class enemy : MonoBehaviour
 
     IEnumerator ShootBurst()
     {
+        animator.SetTrigger("attack");
+        yield return new WaitForSeconds(animationTime);
+
         // if there is a burst interval, shoot projectiles in rapid succession in a straight line
         if (burstInterval > 0)
         {

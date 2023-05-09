@@ -3,6 +3,10 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
+// Thaddeus Reimer
+// 5/12/2023
+// SuperMurder
+
 public class playerMovement : MonoBehaviour
 {
     [Header("Assets")]
@@ -76,7 +80,7 @@ public class playerMovement : MonoBehaviour
         currentHealth = maxHealth;
         camera = Camera.main;
         audioSource = GetComponent<AudioSource>();
-        //gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         Cinemachine.CinemachineVirtualCamera cameraController = GameObject.FindGameObjectWithTag("CameraController").GetComponent<Cinemachine.CinemachineVirtualCamera>();
         cameraController.Follow = transform;
     }
@@ -240,7 +244,7 @@ public class playerMovement : MonoBehaviour
 
         // lerps velocities back to 0 (simulates friction and drag)
         dash = Vector2.Lerp(dash, Vector2.zero, 0.1f);
-        velocity = Vector2.Lerp(velocity, Vector2.zero, 0.3f);
+        velocity = Vector2.Lerp(velocity, Vector2.zero, 0.1f);
 
         // handles dash meter sprite
         dashMeterSprite.localRotation = Quaternion.Euler(0, 0, 180 * (currentDashMeter / dashMeter));
@@ -291,7 +295,7 @@ public class playerMovement : MonoBehaviour
     public void Damage(Vector3 direction, float force, float damage)
     {
         currentHealth -= damage;
-        movement = direction * force;
+        velocity = direction * force;
         if (currentHealth <= 0)
         {
             Die();
@@ -302,6 +306,7 @@ public class playerMovement : MonoBehaviour
     {
         Instantiate(death, transform.position, Quaternion.Euler(-90, 90, 180));
         gameManager.GameEnd();
+        gameManager.audioSource.PlayOneShot(gameManager.deathSound);
         gameObject.SetActive(false);
     }
 

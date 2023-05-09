@@ -45,7 +45,7 @@ public class projectile : MonoBehaviour
 
         // check if there's an object in the way of the bullet (collision detection at home) (is actually way better than unity's built in collision detection)
         RaycastHit2D hit = Physics2D.Linecast(lastFrame, transform.position, hitLayer);
-        if (hit.collider != null && !dead)
+        if (hit)
         {
             Collision(hit.collider);
         }

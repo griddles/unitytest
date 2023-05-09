@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 283815816544671365}
   - component: {fileID: 2959582965360073604}
   - component: {fileID: 2945075730399873585}
-  - component: {fileID: 2401214513012499868}
   m_Layer: 9
   m_Name: test dummy
   m_TagString: Enemy
@@ -133,7 +132,14 @@ MonoBehaviour:
   blood: {fileID: 7707541298261893261, guid: d45c13896a29ea742a01bc055a636cf2, type: 3}
   death: {fileID: 7707541298261893261, guid: fba81bbd9a1b5ce45977662757362082, type: 3}
   maxHealth: 100000000
-  damage: 15
+  contactDamage: 15
+  ranged: 0
+  projectile: {fileID: 0}
+  projectileSpeed: 0
+  projectileCooldown: 0
+  burstCount: 0
+  burstSpread: 0
+  burstInterval: 0
 --- !u!68 &2959582965360073604
 EdgeCollider2D:
   m_ObjectHideFlags: 0
@@ -221,65 +227,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 7
---- !u!114 &2401214513012499868
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3700376587989936926}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ShadowGroup: 0
-  m_Priority: 0
-  m_ComponentVersion: 3
-  m_HasRenderer: 1
-  m_UseRendererSilhouette: 1
-  m_CastsShadows: 1
-  m_SelfShadows: 0
-  m_AlphaCutoff: 0.1
-  m_ApplyToSortingLayers: 00000000
-  m_ShapePath:
-  - {x: -0.011683069, y: -0.09923241, z: 0}
-  - {x: -0.07547064, y: -0.0763067, z: 0}
-  - {x: -0.07777347, y: -0.049440496, z: 0}
-  - {x: -0.050139647, y: -0.007222168, z: 0}
-  - {x: -0.06318895, y: 0.019644042, z: 0}
-  - {x: -0.060118526, y: 0.03806659, z: 0}
-  - {x: -0.033252314, y: 0.04113701, z: 0}
-  - {x: -0.028646678, y: 0.071073644, z: 0}
-  - {x: -0.02319716, y: 0.09002112, z: 0}
-  - {x: 0.020126745, y: 0.09078872, z: 0}
-  - {x: 0.040852085, y: 0.06887331, z: 0}
-  - {x: 0.026620954, y: 0.0526511, z: 0}
-  - {x: 0.055789977, y: 0.03883419, z: 0}
-  - {x: 0.060395613, y: 0.008897558, z: 0}
-  - {x: 0.050416738, y: -0.03869401, z: 0}
-  - {x: 0.071909696, y: -0.06939825, z: 0}
-  - {x: 0.032761797, y: -0.07400388, z: 0}
-  - {x: 0.040437862, y: -0.1001025, z: 0}
-  m_ShapePathHash: 1397726397
-  m_InstanceId: 0
-  m_ShadowShape2DComponent: {fileID: 2959582965360073604}
-  m_ShadowShape2DProvider:
-    rid: 8427845217908162560
-  m_ShadowCastingSource: 2
-  m_ShadowMesh:
-    m_Mesh: {fileID: 0}
-    m_LocalBounds:
-      m_Center: {x: -0.003899604, y: -0.004663691, z: 0}
-      m_Extent: {x: 0.07529949, y: 0.09537652, z: 0}
-    m_EdgeProcessing: 1
-    m_TrimEdge: 0.06
-    m_FlipX: 0
-    m_FlipY: 0
-    m_InitialTrim: 0
-  m_CastingOption: 1
-  references:
-    version: 2
-    RefIds:
-    - rid: 8427845217908162560
-      type: {class: ShadowShape2DProvider_Collider2D, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.2D.Runtime}

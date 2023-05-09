@@ -11,10 +11,11 @@ GameObject:
   - component: {fileID: 5054229045889256465}
   - component: {fileID: 3816309272811359988}
   - component: {fileID: 3670096874704174511}
+  - component: {fileID: 5090095759427832042}
   - component: {fileID: 9099544866960463951}
   m_Layer: 6
   m_Name: Shotgun
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -117,6 +118,20 @@ MonoBehaviour:
   coin: {fileID: 2939538762924637808, guid: 9f38627226dabd6459bae9c0137ca1f4, type: 3}
   coinForce: 32
   shootSound: {fileID: 8300000, guid: 26c92e02013fe6a47a5bc14c2aaa4b95, type: 3}
+--- !u!114 &5090095759427832042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2502844566473763692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c20c5fac660d55f45a0598a820413fb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  core: {fileID: 5803947673808554938, guid: 0a959f524eafa3a47aa77fe2ff2c7a87, type: 3}
+  coreForce: 8
 --- !u!82 &9099544866960463951
 AudioSource:
   m_ObjectHideFlags: 0

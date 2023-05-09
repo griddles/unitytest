@@ -17,12 +17,20 @@ public class coin : MonoBehaviour
 
     void Start()
     {
-        Destroy(gameObject, 2f);
         GameObject trail = Instantiate(bullet);
-        Destroy(trail, 5f);
         bulletTrail = trail.GetComponent<trail>();
 
         player = GameObject.Find("Player").GetComponent<playerMovement>();
+    }
+
+    void Update()
+    {
+        // if velocity magnitude is ever less than 0.5, kill the coin
+        if (GetComponent<Rigidbody2D>().velocity.magnitude < 2f)
+        {
+            dead = true;
+            Destroy(gameObject);
+        }
     }
 
     public void Ricochet(float damage)
@@ -118,5 +126,10 @@ public class coin : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        Destroy(gameObject);
     }
 }
