@@ -55,31 +55,33 @@ public class projectile : MonoBehaviour
 
     private void Collision(Collider2D collision)
     {
-        if (parent != null)
+        if (!dead)
         {
-            if (collision.gameObject.tag == parent.tag)
+            if (parent != null)
             {
-                return;
+                if (collision.gameObject.tag == parent.tag)
+                {
+                    return;
+                }
+            }
+            // check if the object's parent has an enemy script on it
+            if (collision.gameObject.GetComponentInParent<enemy>() != null)
+            {
+
+                // get the current magnitude and direction of the bullet's velocity
+                float magnitude = GetComponent<Rigidbody2D>().velocity.magnitude;
+                Vector2 direction = GetComponent<Rigidbody2D>().velocity.normalized;
+                // apply knockback to the enemy
+                collision.gameObject.GetComponent<enemy>().Damage(direction, magnitude / 8, damage);
+            }
+            // check if the object has a playermovement script, and damage the player
+            else if (collision.gameObject.GetComponent<playerMovement>() != null)
+            {
+                // get the direction that the bullet is travelling in
+                Vector2 direction = GetComponent<Rigidbody2D>().velocity.normalized;
+                collision.gameObject.GetComponent<playerMovement>().Damage(direction, 2, damage * 10);
             }
         }
-        // check if the object's parent has an enemy script on it
-        if (collision.gameObject.GetComponentInParent<enemy>() != null)
-        {
-
-            // get the current magnitude and direction of the bullet's velocity
-            float magnitude = GetComponent<Rigidbody2D>().velocity.magnitude;
-            Vector2 direction = GetComponent<Rigidbody2D>().velocity.normalized;
-            // apply knockback to the enemy
-            collision.gameObject.GetComponent<enemy>().Damage(direction, magnitude / 8, damage);
-        }
-        // check if the object has a playermovement script, and damage the player
-        else if (collision.gameObject.GetComponent<playerMovement>() != null)
-        {
-            // get the direction that the bullet is travelling in
-            Vector2 direction = GetComponent<Rigidbody2D>().velocity.normalized;
-            collision.gameObject.GetComponent<playerMovement>().Damage(direction, 2, damage * 10);
-        }
-
         dead = true;
         Destroy(gameObject, 0.02f);
     }

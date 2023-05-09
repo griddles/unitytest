@@ -5018,7 +5018,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coin: {fileID: 2939538762924637808, guid: 9f38627226dabd6459bae9c0137ca1f4, type: 3}
   coinForce: 50
-  spread: 4
+  spread: 0
   maxCoins: 5
 --- !u!82 &405086843631017720
 AudioSource:
