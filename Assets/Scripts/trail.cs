@@ -8,7 +8,7 @@ public class trail : MonoBehaviour
 
     void Start()
     {
-        
+        Destroy(gameObject, 15f);
     }
 
     public void Trail(Vector3 pointA, Vector3 pointB, float duration)

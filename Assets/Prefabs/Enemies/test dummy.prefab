@@ -122,13 +122,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5027da6173944da438612e010ed1fd52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 1
   awareness: 10
   sightRange: 10
   allyRange: 8
   speed: 0
-  playerLayer:
+  sightLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 0
   blood: {fileID: 7707541298261893261, guid: d45c13896a29ea742a01bc055a636cf2, type: 3}
   death: {fileID: 7707541298261893261, guid: fba81bbd9a1b5ce45977662757362082, type: 3}
   maxHealth: 100000000
@@ -140,6 +141,7 @@ MonoBehaviour:
   burstCount: 0
   burstSpread: 0
   burstInterval: 0
+  animationTime: 0
 --- !u!68 &2959582965360073604
 EdgeCollider2D:
   m_ObjectHideFlags: 0

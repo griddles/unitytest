@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class enemy : MonoBehaviour
 {
+    public bool debug; // logs damage
+
     public int awareness; // interval in ticks between each position check
     public float sightRange;
     public float allyRange;
@@ -230,6 +232,11 @@ public class enemy : MonoBehaviour
 
     public void Damage(Vector3 direction, float force, float value)
     {
+        if (debug)
+        {
+            Debug.Log(value);
+        }
+
         health -= value;
 
         knockback = direction * force;

@@ -5020,6 +5020,7 @@ MonoBehaviour:
   coinForce: 50
   spread: 0
   maxCoins: 5
+  coinFlip: {fileID: 8300000, guid: 88ad548ce5467d44abef7495c0135c6f, type: 3}
 --- !u!82 &405086843631017720
 AudioSource:
   m_ObjectHideFlags: 0

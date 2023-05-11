@@ -132,6 +132,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   core: {fileID: 5803947673808554938, guid: 0a959f524eafa3a47aa77fe2ff2c7a87, type: 3}
   coreForce: 8
+  coreLaunch: {fileID: 8300000, guid: 903711df78fdfda49bd95a69c51dc508, type: 3}
 --- !u!82 &9099544866960463951
 AudioSource:
   m_ObjectHideFlags: 0

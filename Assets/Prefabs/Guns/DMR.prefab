@@ -4897,6 +4897,7 @@ GameObject:
   - component: {fileID: 7935712143173306707}
   - component: {fileID: 5878958745394926835}
   - component: {fileID: 8453572739234728976}
+  - component: {fileID: 5948876820919752882}
   - component: {fileID: 1664664971858658103}
   m_Layer: 6
   m_Name: DMR
@@ -5003,6 +5004,27 @@ MonoBehaviour:
   coin: {fileID: 2939538762924637808, guid: 9f38627226dabd6459bae9c0137ca1f4, type: 3}
   coinForce: 32
   shootSound: {fileID: 8300000, guid: aff491834d4d27640af4383d3e618006, type: 3}
+--- !u!114 &5948876820919752882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2181566435156495119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87fec3918db41a64c8de2766699d5c88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  muzzlePoint: {fileID: 4393492749006313157}
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 1280
+  hitLayer:
+    serializedVersion: 2
+    m_Bits: 640
+  trail: {fileID: 560152722981042148, guid: 40cd8b62ae5a3364b8190a3a72d2757f, type: 3}
+  damage: 12
 --- !u!82 &1664664971858658103
 AudioSource:
   m_ObjectHideFlags: 0

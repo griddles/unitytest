@@ -9,6 +9,14 @@ public class altCoin : MonoBehaviour
     public float coinForce;
     public float spread;
     public float maxCoins;
+    public AudioClip coinFlip;
+
+    private AudioSource audioSource;
+
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     void Update()
     {
@@ -25,6 +33,8 @@ public class altCoin : MonoBehaviour
             // get the player
             GameObject player = GameObject.FindWithTag("Player");
             newCoin.GetComponent<Rigidbody2D>().velocity = (coinForce * new Vector2(direction.x, direction.y)) + player.GetComponent<Rigidbody2D>().velocity;
+
+            audioSource.PlayOneShot(coinFlip);
         }
     }
 }

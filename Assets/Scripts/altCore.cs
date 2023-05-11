@@ -7,12 +7,15 @@ public class altCore : MonoBehaviour
 {
     public GameObject core;
     public float coreForce;
+    public AudioClip coreLaunch;
 
     private gunManager gunManager;
+    private AudioSource audioSource;
 
     private void Start()
     {
         gunManager = gameObject.GetComponentInParent<gunManager>();
+        audioSource = gameObject.GetComponent<AudioSource>();
     }
 
     void Update()
@@ -28,6 +31,8 @@ public class altCore : MonoBehaviour
             newCore.GetComponent<Rigidbody2D>().velocity = (coreForce * new Vector2(direction.x, direction.y)) + player.GetComponent<Rigidbody2D>().velocity;
 
             gunManager.currentCoreCooldown = gunManager.coreCooldown;
+
+            audioSource.PlayOneShot(coreLaunch);
         }
     }
 }
