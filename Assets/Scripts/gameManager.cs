@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -59,18 +58,26 @@ public class GameManager : MonoBehaviour
                 Vector3 place = ground.CellToWorld(localPlace);
                 if (ground.HasTile(localPlace))
                 {
-                    //Tile at "place"
+                    // tile exists
                     spawnPoints.Add(place);
                 }
                 else
                 {
-                    //No tile at "place"
+                    // tile doesn't exist
                 }
             }
         }
     }
 
-    
+
+    void Update()
+    {
+        if (gameOver && Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+    }
+
 
     void FixedUpdate()
     {
